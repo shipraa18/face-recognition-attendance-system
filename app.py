@@ -84,8 +84,8 @@ def register():
             image_data = re.sub('^data:image/.+;base64,', '', image_data)
             image_bytes = base64.b64decode(image_data)
             
-            # Save image
-            image_path = os.path.join(person_dir, f'{len(os.listdir(person_dir)) + 1}.png')
+            # Save image (now JPEG from frontend)
+            image_path = os.path.join(person_dir, f'{len(os.listdir(person_dir)) + 1}.jpg')
             with open(image_path, 'wb') as f:
                 f.write(image_bytes)
             
@@ -110,9 +110,9 @@ def train_model():
             person_dir = os.path.join('dataset', person_name)
             if os.path.isdir(person_dir):
                 names.append(person_name)
-                for image_file in os.listdir(person_dir):
-                    if image_file.endswith('.png'):
-                        image_path = os.path.join(person_dir, image_file)
+                                 for image_file in os.listdir(person_dir):
+                     if image_file.endswith(('.png', '.jpg', '.jpeg')):
+                         image_path = os.path.join(person_dir, image_file)
                         img = cv2.imread(image_path, 0)
                         if img is not None:
                             images.append(img)
@@ -244,9 +244,9 @@ def get_stats():
                 person_dir = os.path.join('dataset', person_name)
                 if os.path.isdir(person_dir):
                     users += 1
-                    for image_file in os.listdir(person_dir):
-                        if image_file.endswith('.png'):
-                            images += 1
+                                         for image_file in os.listdir(person_dir):
+                         if image_file.endswith(('.png', '.jpg', '.jpeg')):
+                             images += 1
         
         return jsonify({
             'users': users,

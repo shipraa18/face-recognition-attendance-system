@@ -157,11 +157,13 @@
             const canvas = document.getElementById('canvas');
             const context = canvas.getContext('2d');
             
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            context.drawImage(video, 0, 0);
+            // Reduce canvas size to compress image
+            canvas.width = 320;  // Reduced from 640
+            canvas.height = 240; // Reduced from 480
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
             
-            const capturedImage = canvas.toDataURL('image/png');
+            // Use JPEG with quality 0.8 for better compression
+            const capturedImage = canvas.toDataURL('image/jpeg', 0.8);
             
             // Stop webcam
             if (stream) {
