@@ -84,8 +84,8 @@ def register():
             image_data = re.sub('^data:image/.+;base64,', '', image_data)
             image_bytes = base64.b64decode(image_data)
             
-            # Save image (now PNG from frontend)
-            image_path = os.path.join(person_dir, f'{len(os.listdir(person_dir)) + 1}.png')
+            # Save image (now JPEG from frontend)
+            image_path = os.path.join(person_dir, f'{len(os.listdir(person_dir)) + 1}.jpg')
             with open(image_path, 'wb') as f:
                 f.write(image_bytes)
             

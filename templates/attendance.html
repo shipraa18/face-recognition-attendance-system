@@ -157,13 +157,13 @@
             const canvas = document.getElementById('canvas');
             const context = canvas.getContext('2d');
             
-            // Use same size as training images but compress PNG
-            canvas.width = 640;  // Same as training images
-            canvas.height = 480; // Same as training images
+            // Use JPEG with high quality but smaller size
+            canvas.width = 480;  // Slightly smaller for better compression
+            canvas.height = 360; // Maintain aspect ratio
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
             
-            // Compress PNG to reduce size while keeping format
-            const capturedImage = canvas.toDataURL('image/png', 0.8);
+            // Use JPEG with high quality for better face recognition
+            const capturedImage = canvas.toDataURL('image/jpeg', 0.9);
             
             // Stop webcam
             if (stream) {
