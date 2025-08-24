@@ -251,6 +251,27 @@ def get_stats():
     except Exception as e:
         return jsonify({'users': 0, 'images': 0})
 
+@app.route('/health')
+def health_check():
+    """Health check endpoint for deployment"""
+    try:
+        # Check if OpenCV is working
+        cv2_version = cv2.__version__
+        face_available = hasattr(cv2, 'face')
+        
+        return jsonify({
+            'status': 'healthy',
+            'opencv_version': cv2_version,
+            'face_module_available': face_available,
+            'dataset_exists': os.path.exists('dataset'),
+            'haar_file_exists': os.path.exists(haar_file)
+        })
+    except Exception as e:
+        return jsonify({
+            'status': 'unhealthy',
+            'error': str(e)
+        }), 500
+
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(debug=False, host='0.0.0.0', port=port)
