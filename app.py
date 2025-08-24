@@ -9,6 +9,10 @@ import re
 
 app = Flask(__name__)
 
+# Configure Flask for larger file uploads
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB limit
+app.config['MAX_CONTENT_PATH'] = None
+
 # Load face cascade classifier
 haar_file = 'haarcascade_frontalface_default.xml'
 face_cascade = cv2.CascadeClassifier(haar_file)
