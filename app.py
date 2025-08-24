@@ -13,6 +13,12 @@ app = Flask(__name__)
 haar_file = 'haarcascade_frontalface_default.xml'
 face_cascade = cv2.CascadeClassifier(haar_file)
 
+# Check if face recognition module is available
+if not hasattr(cv2, 'face'):
+    print("WARNING: OpenCV face recognition module not available!")
+    print("This will prevent face recognition from working properly.")
+    print("Make sure opencv-contrib-python-headless is properly installed.")
+
 # Create dataset directory if it doesn't exist
 if not os.path.exists('dataset'):
     os.makedirs('dataset')
@@ -25,10 +31,16 @@ def get_attendance_file():
 def load_trained_model():
     """Load the trained face recognition model"""
     try:
+        # Check if face module is available
+        if not hasattr(cv2, 'face'):
+            print("Warning: OpenCV face module not available")
+            return None
+        
         model = cv2.face.LBPHFaceRecognizer_create()
         model.read('trained_model.yml')
         return model
-    except:
+    except Exception as e:
+        print(f"Error loading model: {e}")
         return None
 
 def get_person_names():
@@ -49,8 +61,11 @@ def index():
 def register():
     """Register new person for face recognition"""
     if request.method == 'POST':
-        name = request.form.get('name')
-        if name:
+        try:
+            name = request.form.get('name')
+            if not name:
+                return jsonify({'success': False, 'message': 'Please provide a name'})
+            
             # Create directory for the person
             person_dir = os.path.join('dataset', name)
             if not os.path.exists(person_dir):
@@ -58,19 +73,23 @@ def register():
             
             # Get image data from form
             image_data = request.form.get('image')
-            if image_data:
-                # Extract base64 data
-                image_data = re.sub('^data:image/.+;base64,', '', image_data)
-                image_bytes = base64.b64decode(image_data)
-                
-                # Save image
-                image_path = os.path.join(person_dir, f'{len(os.listdir(person_dir)) + 1}.png')
-                with open(image_path, 'wb') as f:
-                    f.write(image_bytes)
-                
-                return jsonify({'success': True, 'message': f'Registered {name} successfully!'})
-        
-        return jsonify({'success': False, 'message': 'Please provide a name and capture an image'})
+            if not image_data:
+                return jsonify({'success': False, 'message': 'Please capture an image'})
+            
+            # Extract base64 data
+            image_data = re.sub('^data:image/.+;base64,', '', image_data)
+            image_bytes = base64.b64decode(image_data)
+            
+            # Save image
+            image_path = os.path.join(person_dir, f'{len(os.listdir(person_dir)) + 1}.png')
+            with open(image_path, 'wb') as f:
+                f.write(image_bytes)
+            
+            return jsonify({'success': True, 'message': f'Registered {name} successfully!'})
+            
+        except Exception as e:
+            print(f"Registration error: {str(e)}")
+            return jsonify({'success': False, 'message': f'Error registering user: {str(e)}'})
     
     return render_template('register.html')
 
