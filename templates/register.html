@@ -155,13 +155,13 @@
             const canvas = document.getElementById('canvas');
             const context = canvas.getContext('2d');
             
-            // Reduce canvas size to compress image
-            canvas.width = 320;  // Reduced from 640
-            canvas.height = 240; // Reduced from 480
+            // Use same size as training images (PNG format)
+            canvas.width = 640;  // Same as training images
+            canvas.height = 480; // Same as training images
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
             
-            // Use JPEG with quality 0.8 for better compression
-            capturedImage = canvas.toDataURL('image/jpeg', 0.8);
+            // Use PNG format to match training data
+            capturedImage = canvas.toDataURL('image/png');
             document.getElementById('capturedImage').src = capturedImage;
             document.getElementById('preview').style.display = 'block';
             document.getElementById('submitBtn').disabled = false;
