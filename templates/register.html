@@ -11,6 +11,7 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333; /* Ensure default text color is dark */
         }
         .main-container {
             padding: 40px 0;
@@ -19,6 +20,23 @@
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             border: none;
+            background: rgba(255, 255, 255, 0.95); /* Semi-transparent white background */
+        }
+        .card-body {
+            color: #333; /* Dark text on light card background */
+        }
+        .card-body h2 {
+            color: #2c3e50; /* Dark blue for headings */
+        }
+        .form-label {
+            color: #2c3e50; /* Dark text for labels */
+            font-weight: 600;
+        }
+        .form-control {
+            color: #333; /* Dark text in input fields */
+        }
+        .form-control::placeholder {
+            color: #6c757d; /* Darker placeholder text */
         }
         .btn-custom {
             background: linear-gradient(45deg, #667eea, #764ba2);
@@ -49,12 +67,13 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.8);
             color: white;
             border: none;
             padding: 10px 20px;
             border-radius: 25px;
             font-size: 1.2rem;
+            font-weight: 600;
         }
         .capture-btn:hover {
             background: rgba(0,0,0,0.9);
@@ -62,6 +81,21 @@
         .navbar {
             background: rgba(255,255,255,0.1) !important;
             backdrop-filter: blur(10px);
+        }
+        .navbar-brand {
+            color: white !important;
+            font-weight: 700;
+        }
+        .btn-outline-light {
+            color: white;
+            border-color: white;
+        }
+        .btn-outline-light:hover {
+            background-color: white;
+            color: #667eea;
+        }
+        #message .alert {
+            color: #333; /* Dark text in alert messages */
         }
     </style>
 </head>
