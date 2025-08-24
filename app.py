@@ -10,7 +10,7 @@ import re
 app = Flask(__name__)
 
 # Configure Flask for larger file uploads
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB limit
+app.config['MAX_CONTENT_LENGTH'] = 32 * 1024 * 1024  # 32MB limit
 app.config['MAX_CONTENT_PATH'] = None
 
 # Load face cascade classifier
