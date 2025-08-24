@@ -110,9 +110,9 @@ def train_model():
             person_dir = os.path.join('dataset', person_name)
             if os.path.isdir(person_dir):
                 names.append(person_name)
-                                 for image_file in os.listdir(person_dir):
-                     if image_file.endswith(('.png', '.jpg', '.jpeg')):
-                         image_path = os.path.join(person_dir, image_file)
+                for image_file in os.listdir(person_dir):
+                    if image_file.endswith(('.png', '.jpg', '.jpeg')):
+                        image_path = os.path.join(person_dir, image_file)
                         img = cv2.imread(image_path, 0)
                         if img is not None:
                             images.append(img)
@@ -244,9 +244,9 @@ def get_stats():
                 person_dir = os.path.join('dataset', person_name)
                 if os.path.isdir(person_dir):
                     users += 1
-                                         for image_file in os.listdir(person_dir):
-                         if image_file.endswith(('.png', '.jpg', '.jpeg')):
-                             images += 1
+                    for image_file in os.listdir(person_dir):
+                        if image_file.endswith(('.png', '.jpg', '.jpeg')):
+                            images += 1
         
         return jsonify({
             'users': users,
